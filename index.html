@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CKite – Widget de viento Corralejo</title>
+<style>body{margin:0;padding:40px 16px;background:#13202A;display:flex;justify-content:center}</style>
+</head>
+<body>
+
+<!-- ========== CKITE WIND WIDGET · copia desde aquí ========== -->
+<!-- data-lang: es | en | it  ·  data-lat / data-lon: punto (máx. 4 decimales) -->
+<div class="ckw" id="ckite-wind" data-lang="es" data-lat="28.7277" data-lon="-13.8428" data-spot="Corralejo · Flag Beach" data-whatsapp="34679682888">
+  <div class="ckw-loading">…</div>
+</div>
+
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+.ckw{--ckw-bg:#FFFFFF;--ckw-ink:#13202A;--ckw-muted:#5C6B73;--ckw-sage:#4F6B58;--ckw-mist:#E3E8DF;--ckw-accent:#F0B35A;
+  font-family:'DM Sans',system-ui,sans-serif;background:var(--ckw-bg);color:var(--ckw-ink);border-radius:20px;
+  padding:20px;width:100%;max-width:380px;box-sizing:border-box;box-shadow:0 12px 32px rgba(0,0,0,.18)}
+.ckw *{box-sizing:border-box}
+@media (max-width:380px){.ckw{padding:16px}}
+.ckw-loading{color:var(--ckw-muted);font-size:14px;padding:24px 0;text-align:center}
+.ckw-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.ckw[hidden]{display:none!important}
+.ckw-close{all:unset;box-sizing:border-box;flex-shrink:0;width:36px;height:36px;margin:-10px -10px -10px 0;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;color:var(--ckw-muted);cursor:pointer}
+.ckw-close:hover{background:var(--ckw-mist);color:var(--ckw-ink)}
+.ckw-close:focus-visible{outline:2px solid var(--ckw-ink);outline-offset:1px}
+.ckw-label{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--ckw-sage)}
+.ckw-spot{font-size:11px;font-weight:700;letter-spacing:.3px;min-width:0;text-transform:uppercase;color:var(--ckw-sage)}
+.ckw-main{display:flex;align-items:center;gap:16px;margin:14px 0 10px}
+.ckw-arrow{width:64px;height:64px;flex-shrink:0;border-radius:50%;background:var(--ckw-mist);display:flex;align-items:center;justify-content:center}
+.ckw-arrow svg{transition:transform .6s ease}
+.ckw-speed{font-family:'Archivo Black',sans-serif;font-size:40px;line-height:1}
+.ckw-speed small{font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;margin-left:4px}
+.ckw-sub{font-size:14px;color:var(--ckw-muted);margin-top:4px}
+.ckw-badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:0;text-transform:none;padding:5px 9px;border-radius:999px;white-space:nowrap}
+.ckw-right{display:flex;align-items:center;gap:4px;margin-left:auto}
+.ckw-toggle{all:unset;box-sizing:border-box;width:100%;min-height:44px;display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:6px;padding:8px 6px 8px 10px;margin-top:6px;border-radius:12px;background:var(--ckw-mist);color:var(--ckw-sage);cursor:pointer;
+  font-family:inherit;font-size:11px;font-weight:700;letter-spacing:.3px;text-transform:uppercase}
+.ckw-toggle:hover{background:#D7DED2}
+.ckw-toggle:focus-visible{outline:2px solid var(--ckw-ink);outline-offset:2px}
+.ckw-toggle svg{transition:transform .25s ease}
+.ckw-toggle[aria-expanded="true"] svg{transform:rotate(180deg)}
+.ckw-fc{padding-top:12px}
+.ckw-fc[hidden]{display:none}
+.ckw-bars{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px;align-items:end;height:84px;margin-bottom:6px}
+.ckw-bar{position:relative;background:var(--ckw-mist);border-radius:6px 6px 2px 2px;min-height:4px}
+.ckw-bar span{position:absolute;bottom:0;left:0;right:0;border-radius:6px 6px 2px 2px}
+.ckw-hours{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px;font-size:11px;color:var(--ckw-muted);text-align:center}
+.ckw-kn{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px;font-size:11px;font-weight:700;text-align:center;margin-bottom:4px}
+.ckw-cta{display:flex;align-items:center;justify-content:center;min-height:46px;margin-top:16px;border-radius:999px;
+  background:var(--ckw-ink);color:#fff!important;text-decoration:none;font-weight:700;font-size:15px}
+.ckw-cta:hover{opacity:.9}
+.ckw-src{font-size:10px;line-height:1.5;color:var(--ckw-muted);margin-top:10px;text-align:center}
+.ckw-src a{color:inherit}
+</style>
+<script>
+(function(){
+  var el=document.getElementById('ckite-wind'); if(!el) return;
+  var T={
+    es:{now:'Viento ahora',gust:'rachas',from:'del',next:'Próximas horas',close:'Cerrar el widget de viento',cta:'Reservar clase por WhatsApp',
+        upd:'Previsión',err:'No se pudo cargar el viento. Inténtalo más tarde.',src:'Datos de previsión',
+        lvl:{none:'Poco viento · sin clases',beg:'Ideal para iniciación',all:'Todos los niveles',adv:'Fuerte · solo avanzados'},
+        msg:'Hola CKite! He visto el viento en la web y quiero reservar una clase.'},
+    en:{now:'Wind now',gust:'gusts',from:'from',next:'Next hours',close:'Close wind widget',cta:'Book a lesson on WhatsApp',
+        upd:'Forecast',err:'Wind data unavailable. Please try again later.',src:'Forecast data',
+        lvl:{none:'Light wind · no lessons',beg:'Perfect for beginners',all:'Good for all levels',adv:'Strong · advanced only'},
+        msg:'Hi CKite! I saw the wind on your website and would like to book a lesson.'},
+    it:{now:'Vento ora',gust:'raffiche',from:'da',next:'Prossime ore',close:'Chiudi il widget del vento',cta:'Prenota una lezione su WhatsApp',
+        upd:'Previsione',err:'Dati vento non disponibili. Riprova più tardi.',src:'Dati di previsione',
+        lvl:{none:'Poco vento · niente lezioni',beg:'Ideale per principianti',all:'Tutti i livelli',adv:'Forte · solo avanzati'},
+        msg:'Ciao CKite! Ho visto il vento sul sito e vorrei prenotare una lezione.'}
+  };
+  var L=T[el.dataset.lang]||T.es;
+  var DIRS={es:['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSO','SO','OSO','O','ONO','NO','NNO'],
+            en:['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'],
+            it:['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSO','SO','OSO','O','ONO','NO','NNO']};
+  var D=DIRS[el.dataset.lang]||DIRS.es;
+  var MS2KN=1.94384;               // MET Norway da m/s; convertimos a nudos
+  function compass(deg){return D[Math.round(deg/22.5)%16];}
+  // Umbrales en nudos: ajústalos a tu criterio
+  function level(kn){
+    if(kn<12) return {t:L.lvl.none,bg:'#FFFFFF',fg:'#44535C',bar:'#A9B5AE'};
+    if(kn<18) return {t:L.lvl.beg,bg:'#D5E6D9',fg:'#2F5A3D',bar:'#6E8B76'};
+    if(kn<26) return {t:L.lvl.all,bg:'#FBE7C6',fg:'#7A4A08',bar:'#F0B35A'};
+    return {t:L.lvl.adv,bg:'#F6D3C7',fg:'#8A2E12',bar:'#D9693F'};
+  }
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  // Hora local de Canarias (cambia sola entre horario de verano e invierno)
+  function hh(iso,withMin){
+    try{return new Intl.DateTimeFormat('es-ES',{timeZone:'Atlantic/Canary',hour:'2-digit',minute:withMin?'2-digit':undefined,hour12:false}).format(new Date(iso));}
+    catch(e){return iso.slice(11,withMin?16:13);}
+  }
+
+  var lat=Number(el.dataset.lat).toFixed(4), lon=Number(el.dataset.lon).toFixed(4);
+  var url='https://api.met.no/weatherapi/locationforecast/2.0/complete?lat='+lat+'&lon='+lon;
+  var CACHE='ckite-wind-'+lat+','+lon, TTL=10*60*1000;
+  var open=el.dataset.open==='true';   // data-open="true" para que empiece desplegado
+
+  function render(d){
+    var ts=d.properties.timeseries, now=Date.now(), i0=0;
+    // entrada horaria más cercana a "ahora"
+    for(var k=0;k<ts.length;k++){ if(Date.parse(ts[k].time)<=now) i0=k; else break; }
+    var c=ts[i0].data.instant.details;
+    var kn=Math.round(c.wind_speed*MS2KN),
+        g=Math.round((c.wind_speed_of_gust!=null?c.wind_speed_of_gust:c.wind_speed)*MS2KN),
+        dir=c.wind_from_direction, lv=level(kn);
+    var hrs=[],max=30;
+    for(var i=i0;i<ts.length&&hrs.length<8;i++){
+      var v=ts[i].data.instant.details.wind_speed*MS2KN;
+      hrs.push({h:hh(ts[i].time,false),v:Math.round(v)}); if(v>max)max=v;
+    }
+    var bars='',kns='',hs='';
+    hrs.forEach(function(h){
+      bars+='<div class="ckw-bar" style="height:100%"><span style="height:'+Math.max(5,h.v/max*100)+'%;background:'+level(h.v).bar+'"></span></div>';
+      kns+='<div>'+h.v+'</div>'; hs+='<div>'+h.h+'h</div>';
+    });
+    var wa='https://wa.me/'+el.dataset.whatsapp+'?text='+encodeURIComponent(L.msg);
+    // La flecha apunta hacia donde sopla el viento (dirección de origen + 180°)
+    el.innerHTML=
+      '<div class="ckw-head"><span class="ckw-spot">'+esc(L.now)+' · '+esc(el.dataset.spot)+'</span>'+
+        '<button type="button" class="ckw-close" aria-label="'+esc(L.close)+'">'+
+          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>'+
+        '</button></div>'+
+      '<div class="ckw-main"><div class="ckw-arrow" role="img" aria-label="'+esc(L.from)+' '+compass(dir)+'">'+
+        '<svg width="34" height="34" viewBox="0 0 24 24" style="transform:rotate('+(dir+180)+'deg)" aria-hidden="true"><path d="M12 2l6 18-6-4-6 4z" fill="#13202A"/></svg></div>'+
+        '<div><div class="ckw-speed">'+kn+'<small>kn</small></div>'+
+        '<div class="ckw-sub">'+esc(L.gust)+' '+g+' kn · '+esc(L.from)+' '+compass(dir)+' ('+Math.round(dir)+'°)</div></div></div>'+
+      '<button type="button" class="ckw-toggle" aria-expanded="'+open+'" aria-controls="ckw-fc">'+
+        '<span>'+esc(L.next)+'</span>'+
+        '<span class="ckw-right">'+
+        '<span class="ckw-badge" style="background:'+lv.bg+';color:'+lv.fg+'">'+esc(lv.t)+'</span>'+
+        '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>'+
+        '</span>'+
+      '</button>'+
+      '<div class="ckw-fc" id="ckw-fc"'+(open?'':' hidden')+'>'+
+        '<div class="ckw-kn">'+kns+'</div><div class="ckw-bars">'+bars+'</div><div class="ckw-hours">'+hs+'</div>'+
+      '</div>'+
+      '<a class="ckw-cta" href="'+wa+'" target="_blank" rel="noopener">'+esc(L.cta)+'</a>'+
+      '<div class="ckw-src">'+esc(L.src)+': <a href="https://api.met.no/" target="_blank" rel="noopener">MET Norway</a>, '+
+      '<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> (convertidos a nudos)</div>';
+  }
+  function readCache(){
+    try{var c=JSON.parse(localStorage.getItem(CACHE)); if(c&&Date.now()-c.t<TTL) return c.d;}catch(e){}
+    return null;
+  }
+  function load(){
+    var cached=readCache(); if(cached){ render(cached); return; }
+    fetch(url).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){
+      try{localStorage.setItem(CACHE,JSON.stringify({t:Date.now(),d:d}));}catch(e){}
+      render(d);
+    }).catch(function(){el.innerHTML='<div class="ckw-loading">'+esc(L.err)+'</div>';});
+  }
+  // Toggle de "Próximas horas": se recuerda abierto/cerrado aunque el widget se recargue
+  el.addEventListener('click',function(e){
+    if(!e.target.closest) return;
+    // Botón X: oculta el widget y no vuelve a salir durante esta visita
+    if(e.target.closest('.ckw-close')){
+      el.hidden=true; clearInterval(timer);
+      try{sessionStorage.setItem(CLOSED,'1');}catch(err){}
+      return;
+    }
+    var b=e.target.closest('.ckw-toggle'); if(!b) return;
+    open=!open;
+    b.setAttribute('aria-expanded',open);
+    var fc=el.querySelector('.ckw-fc'); if(fc) fc.hidden=!open;
+  });
+  var CLOSED='ckite-wind-closed', closed=false, timer;
+  try{closed=sessionStorage.getItem(CLOSED)==='1';}catch(err){}
+  if(closed){ el.hidden=true; return; }
+  load(); timer=setInterval(load,TTL);
+})();
+</script>
+<!-- ========== CKITE WIND WIDGET · hasta aquí ========== -->
+
+</body>
+</html>
